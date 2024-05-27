@@ -11,6 +11,19 @@ const getAll = async (_, res) => {
     }
 }
 
+const findId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const response = await todoModel.findAllOne(id);
+        if(!response) {
+            return res.status(404).json({message: 'El resgitro no existe en la base de datosss'});
+        }
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const createPost = async (req, res) => {
     try {
         const { title } = req.body;
@@ -57,6 +70,7 @@ const deleteTodos = async (req, res) =>{
 
 export const todoController ={
     getAll,
+    findId,
     createPost,
     updatePatch,
     deleteTodos

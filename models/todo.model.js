@@ -5,6 +5,13 @@ const findAll = async () => {
     return rows
 }
 
+const findAllOne = async (id) => {
+    const query = 'SELECT * FROM todos WHERE id = ($1)';
+    const {rows} = await pool.query(query, [id]);
+
+    return rows[0]
+}
+
 const create = async (title) => {
     // Siempre tiene que ir los parentesis para poder que no le salga un error de sintaxis 
     const query = 'INSERT INTO todos (title) VALUES ($1) RETURNING *'
@@ -37,6 +44,7 @@ const deleteTodo = async (id) => {
 
 export const todoModel = {
     findAll,
+    findAllOne,
     create,
     updateTodos,
     deleteTodo
